@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"go-gql/graph"
+	"go-gql/graph/services"
 	"go-gql/internal"
 	"log"
 	"net/http"
@@ -31,7 +32,11 @@ func main() {
 	}
 	defer db.Close()
 
-	srv := handler.NewDefaultServer(internal.NewExecutableSchema(internal.Config{Resolvers: &graph.Resolver{}}))
+	service := services.New(db)
+
+	srv := handler.NewDefaultServer(internal.NewExecutableSchema(internal.Config{Resolvers: &graph.Resolver{
+		Srv: service,
+	}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)

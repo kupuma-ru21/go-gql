@@ -17,7 +17,6 @@ func (u *userService) GetUserByName(ctx context.Context, name string) (*model.Us
 	user, err := db.Users(
 		qm.Select(db.UserTableColumns.ID, db.UserTableColumns.Name),
 		db.UserWhere.Name.EQ(name),
-		// qm.Where("name = ?", name),
 	).One(ctx, u.exec)
 
 	if err != nil {
