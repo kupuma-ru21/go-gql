@@ -26,7 +26,7 @@ type AddProjectV2ItemByIDPayload struct {
 
 type Issue struct {
 	ID           string                   `json:"id"`
-	URL          string                   `json:"url"`
+	URL          MyURL                    `json:"url"`
 	Title        string                   `json:"title"`
 	Closed       bool                     `json:"closed"`
 	Number       int                      `json:"number"`
@@ -62,7 +62,7 @@ type PageInfo struct {
 type ProjectV2 struct {
 	ID     string                   `json:"id"`
 	Title  string                   `json:"title"`
-	URL    string                   `json:"url"`
+	URL    MyURL                    `json:"url"`
 	Number int                      `json:"number"`
 	Items  *ProjectV2ItemConnection `json:"items"`
 	Owner  *User                    `json:"owner"`
@@ -109,7 +109,7 @@ type PullRequest struct {
 	BaseRefName  string                   `json:"baseRefName"`
 	Closed       bool                     `json:"closed"`
 	HeadRefName  string                   `json:"headRefName"`
-	URL          string                   `json:"url"`
+	URL          MyURL                    `json:"url"`
 	Number       int                      `json:"number"`
 	Repository   *Repository              `json:"repository"`
 	ProjectItems *ProjectV2ItemConnection `json:"projectItems"`

@@ -1586,9 +1586,9 @@ func (ec *executionContext) _Issue_url(ctx context.Context, field graphql.Collec
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(model.MyURL)
 	fc.Result = res
-	return ec.marshalNURI2string(ctx, field.Selections, res)
+	return ec.marshalNURI2goᚑgqlᚋgraphᚋmodelᚐMyURL(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Issue_url(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2564,9 +2564,9 @@ func (ec *executionContext) _ProjectV2_url(ctx context.Context, field graphql.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(model.MyURL)
 	fc.Result = res
-	return ec.marshalNURI2string(ctx, field.Selections, res)
+	return ec.marshalNURI2goᚑgqlᚋgraphᚋmodelᚐMyURL(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ProjectV2_url(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3676,9 +3676,9 @@ func (ec *executionContext) _PullRequest_url(ctx context.Context, field graphql.
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(model.MyURL)
 	fc.Result = res
-	return ec.marshalNURI2string(ctx, field.Selections, res)
+	return ec.marshalNURI2goᚑgqlᚋgraphᚋmodelᚐMyURL(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PullRequest_url(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8499,19 +8499,14 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) unmarshalNURI2string(ctx context.Context, v interface{}) (string, error) {
-	res, err := graphql.UnmarshalString(v)
+func (ec *executionContext) unmarshalNURI2goᚑgqlᚋgraphᚋmodelᚐMyURL(ctx context.Context, v interface{}) (model.MyURL, error) {
+	var res model.MyURL
+	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNURI2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
-	res := graphql.MarshalString(v)
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
+func (ec *executionContext) marshalNURI2goᚑgqlᚋgraphᚋmodelᚐMyURL(ctx context.Context, sel ast.SelectionSet, v model.MyURL) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) marshalNUser2ᚖgoᚑgqlᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {
