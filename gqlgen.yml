@@ -90,4 +90,4 @@ models:
       - github.com/99designs/gqlgen/graphql.Time
   URI:
     model:
-      - go-gql/graph/model.MyURL
+      - go-gql/graph/model.URI
