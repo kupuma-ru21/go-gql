@@ -13,16 +13,17 @@ type repositoryService struct {
 	exec boil.ContextExecutor
 }
 
-func (u *userService) GetRepositoryByName(ctx context.Context, name string) (*model.Repository, error) {
+func (r *repositoryService) GetRepositoryByName(ctx context.Context, owner, name string) (*model.Repository, error) {
 	repository, err := db.Repositories(
 		qm.Select(
-			db.RepositoryTableColumns.ID,
-			db.RepositoryTableColumns.Name,
-			db.RepositoryTableColumns.CreatedAt,
+			db.RepositoryColumns.ID,
+			db.RepositoryColumns.Name,
+			db.RepositoryColumns.Owner,
+			db.RepositoryColumns.CreatedAt,
 		),
+		db.RepositoryWhere.Owner.EQ(owner),
 		db.RepositoryWhere.Name.EQ(name),
-	).One(ctx, u.exec)
-
+	).One(ctx, r.exec)
 	if err != nil {
 		return nil, err
 	}
@@ -33,6 +34,7 @@ func (u *userService) GetRepositoryByName(ctx context.Context, name string) (*mo
 func convertRepository(repository *db.Repository) *model.Repository {
 	return &model.Repository{
 		ID:        repository.ID,
+		Owner:     &model.User{ID: repository.Owner},
 		Name:      repository.Name,
 		CreatedAt: repository.CreatedAt,
 	}

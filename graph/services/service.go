@@ -24,7 +24,7 @@ type UserService interface {
 }
 
 type RepositoryService interface {
-	GetRepositoryByName(ctx context.Context, name string) (*model.Repository, error)
+	GetRepositoryByName(ctx context.Context, owner, name string) (*model.Repository, error)
 }
 
 func New(exec boil.ContextExecutor) Services {
