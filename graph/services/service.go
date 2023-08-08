@@ -31,6 +31,7 @@ type RepositoryService interface {
 
 type IssueService interface {
 	GetIssueByRepoAndNumber(ctx context.Context, repoID string, number int) (*model.Issue, error)
+	ListIssueInRepository(ctx context.Context, repoID string, after *string, before *string, first *int, last *int) (*model.IssueConnection, error)
 }
 
 func New(exec boil.ContextExecutor) Services {
