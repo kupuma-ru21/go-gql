@@ -6,9 +6,11 @@ package graph
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"go-gql/graph/model"
 	"go-gql/internal"
+	"strings"
 )
 
 // AddProjectV2ItemByID is the resolver for the addProjectV2ItemById field.
@@ -33,7 +35,15 @@ func (r *queryResolver) User(ctx context.Context, name string) (*model.User, err
 
 // Node is the resolver for the node field.
 func (r *queryResolver) Node(ctx context.Context, id string) (model.Node, error) {
-	panic(fmt.Errorf("not implemented: Node - node"))
+	nElems := strings.SplitN(id, "_", 2)
+	nType, _ := nElems[0], nElems[1]
+
+	switch nType {
+	case "REPO":
+		return r.Srv.GetRepositoryByID(ctx, id)
+	default:
+		return nil, errors.New("invalid ID")
+	}
 }
 
 // Owner is the resolver for the owner field.

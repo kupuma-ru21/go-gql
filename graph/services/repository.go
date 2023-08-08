@@ -31,6 +31,22 @@ func (r *repositoryService) GetRepositoryByName(ctx context.Context, owner, name
 	return convertRepository(repository), nil
 }
 
+func (r *repositoryService) GetRepositoryByID(ctx context.Context, id string) (*model.Repository, error) {
+	repo, err := db.FindRepository(
+		ctx,
+		r.exec,
+		id,
+		db.RepositoryColumns.ID,
+		db.RepositoryColumns.Name,
+		db.RepositoryColumns.Owner,
+		db.RepositoryColumns.CreatedAt,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return convertRepository(repo), nil
+}
+
 func convertRepository(repository *db.Repository) *model.Repository {
 	return &model.Repository{
 		ID:        repository.ID,

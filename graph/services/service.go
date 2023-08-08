@@ -26,6 +26,7 @@ type UserService interface {
 
 type RepositoryService interface {
 	GetRepositoryByName(ctx context.Context, owner, name string) (*model.Repository, error)
+	GetRepositoryByID(ctx context.Context, id string) (*model.Repository, error)
 }
 
 type IssueService interface {
