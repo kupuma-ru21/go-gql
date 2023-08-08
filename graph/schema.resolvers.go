@@ -13,6 +13,21 @@ import (
 	"strings"
 )
 
+// Author is the resolver for the author field.
+func (r *issueResolver) Author(ctx context.Context, obj *model.Issue) (*model.User, error) {
+	return r.Srv.GetUserByID(ctx, obj.Author.ID)
+}
+
+// Repository is the resolver for the repository field.
+func (r *issueResolver) Repository(ctx context.Context, obj *model.Issue) (*model.Repository, error) {
+	panic(fmt.Errorf("not implemented: Repository - repository"))
+}
+
+// ProjectItems is the resolver for the projectItems field.
+func (r *issueResolver) ProjectItems(ctx context.Context, obj *model.Issue, after *string, before *string, first *int, last *int) (*model.ProjectV2ItemConnection, error) {
+	panic(fmt.Errorf("not implemented: ProjectItems - projectItems"))
+}
+
 // AddProjectV2ItemByID is the resolver for the addProjectV2ItemById field.
 func (r *mutationResolver) AddProjectV2ItemByID(ctx context.Context, input model.AddProjectV2ItemByIDInput) (*model.AddProjectV2ItemByIDPayload, error) {
 	panic(fmt.Errorf("not implemented: AddProjectV2ItemByID - addProjectV2ItemById"))
@@ -71,6 +86,9 @@ func (r *repositoryResolver) PullRequests(ctx context.Context, obj *model.Reposi
 	panic(fmt.Errorf("not implemented: PullRequests - pullRequests"))
 }
 
+// Issue returns internal.IssueResolver implementation.
+func (r *Resolver) Issue() internal.IssueResolver { return &issueResolver{r} }
+
 // Mutation returns internal.MutationResolver implementation.
 func (r *Resolver) Mutation() internal.MutationResolver { return &mutationResolver{r} }
 
@@ -80,6 +98,7 @@ func (r *Resolver) Query() internal.QueryResolver { return &queryResolver{r} }
 // Repository returns internal.RepositoryResolver implementation.
 func (r *Resolver) Repository() internal.RepositoryResolver { return &repositoryResolver{r} }
 
+type issueResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type repositoryResolver struct{ *Resolver }
