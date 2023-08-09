@@ -62,6 +62,8 @@ func (r *queryResolver) Node(ctx context.Context, id string) (model.Node, error)
 	nType, _ := nElems[0], nElems[1]
 
 	switch nType {
+	case "U":
+		return r.Srv.GetUserByID(ctx, id)
 	case "REPO":
 		return r.Srv.GetRepositoryByID(ctx, id)
 	default:
