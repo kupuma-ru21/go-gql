@@ -96,7 +96,7 @@ func (r *repositoryResolver) PullRequests(ctx context.Context, obj *model.Reposi
 
 // ProjectV2 is the resolver for the projectV2 field.
 func (r *userResolver) ProjectV2(ctx context.Context, obj *model.User, number int) (*model.ProjectV2, error) {
-	panic(fmt.Errorf("not implemented: ProjectV2 - projectV2"))
+	return r.Srv.GetProjectByOwnerAndNumber(ctx, obj.ID, number)
 }
 
 // ProjectV2s is the resolver for the projectV2s field.

@@ -11,12 +11,14 @@ type Services interface {
 	UserService
 	RepositoryService
 	IssueService
+	ProjectService
 }
 
 type services struct {
 	*userService
 	*repositoryService
 	*issueService
+	*projectService
 }
 
 type UserService interface {
@@ -35,10 +37,15 @@ type IssueService interface {
 	ListIssueInRepository(ctx context.Context, repoID string, after *string, before *string, first *int, last *int) (*model.IssueConnection, error)
 }
 
+type ProjectService interface {
+	GetProjectByOwnerAndNumber(ctx context.Context, ownerID string, number int) (*model.ProjectV2, error)
+}
+
 func New(exec boil.ContextExecutor) Services {
 	return &services{
 		userService:       &userService{exec: exec},
 		repositoryService: &repositoryService{exec: exec},
 		issueService:      &issueService{exec: exec},
+		projectService:    &projectService{exec: exec},
 	}
 }
