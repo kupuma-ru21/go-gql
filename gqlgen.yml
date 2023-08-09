@@ -111,3 +111,9 @@ models:
         resolver: true
       author:
         resolver: true
+  User:
+    fields:
+      projectV2:
+        resolver: true
+      projectV2s:
+        resolver: true
