@@ -33,6 +33,20 @@ func (p *projectService) GetProjectByOwnerAndNumber(ctx context.Context, ownerID
 	return convertProjectV2(project), nil
 }
 
+func (p *projectService) GetProjectByID(ctx context.Context, id string) (*model.ProjectV2, error) {
+	project, err := db.FindProject(ctx, p.exec, id,
+		db.ProjectColumns.ID,
+		db.ProjectColumns.Title,
+		db.ProjectColumns.Number,
+		db.ProjectColumns.URL,
+		db.ProjectColumns.Owner,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return convertProjectV2(project), nil
+}
+
 func convertProjectV2(project *db.Project) *model.ProjectV2 {
 	projectURL, err := model.UnmarshalURI(project.URL)
 	if err != nil {

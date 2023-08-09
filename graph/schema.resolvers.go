@@ -66,6 +66,8 @@ func (r *queryResolver) Node(ctx context.Context, id string) (model.Node, error)
 		return r.Srv.GetUserByID(ctx, id)
 	case "REPO":
 		return r.Srv.GetRepositoryByID(ctx, id)
+	case "PJ":
+		return r.Srv.GetProjectByID(ctx, id)
 	default:
 		return nil, errors.New("invalid ID")
 	}
