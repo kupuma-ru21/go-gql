@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"context"
 	"database/sql"
 	"fmt"
 	"go-gql/graph"
@@ -10,6 +12,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/extension"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -47,6 +50,37 @@ func main() {
 			},
 		),
 	)
+
+	srv.AroundRootFields(func(ctx context.Context, next graphql.RootResolver) graphql.Marshaler {
+		log.Println("before RootResolver")
+		res := next(ctx)
+		defer func() {
+			var b bytes.Buffer
+			res.MarshalGQL(&b)
+			log.Println("after RootResolver", b.String())
+		}()
+		return res
+	})
+
+	srv.AroundOperations(func(ctx context.Context, next graphql.OperationHandler) graphql.ResponseHandler {
+		log.Println("before OperationHandler")
+		res := next(ctx)
+		defer log.Println("after OperationHandler")
+		return res
+	})
+
+	srv.AroundResponses(func(ctx context.Context, next graphql.ResponseHandler) *graphql.Response {
+		log.Println("before ResponseHandler")
+		res := next(ctx)
+		defer log.Println("after ResponseHandler")
+		return res
+	})
+
+	srv.AroundFields(func(ctx context.Context, next graphql.Resolver) (res interface{}, err error) {
+		res, err = next(ctx)
+		log.Println("AroundFields")
+		return
+	})
 
 	srv.Use(extension.FixedComplexityLimit(10))
 
