@@ -6,4 +6,7 @@ import "go-gql/graph/services"
 //
 // It serves as dependency injection for your app, add any dependencies you require here.
 
-type Resolver struct{ Srv services.Services }
+type Resolver struct {
+	Srv services.Services
+	*Loaders
+}
