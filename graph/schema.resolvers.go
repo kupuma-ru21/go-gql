@@ -103,7 +103,7 @@ func (r *userResolver) ProjectV2(ctx context.Context, obj *model.User, number in
 
 // ProjectV2s is the resolver for the projectV2s field.
 func (r *userResolver) ProjectV2s(ctx context.Context, obj *model.User, after *string, before *string, first *int, last *int) (*model.ProjectV2Connection, error) {
-	panic(fmt.Errorf("not implemented: ProjectV2s - projectV2s"))
+	return r.Srv.ListProjectByOwner(ctx, obj.ID, after, before, first, last)
 }
 
 // Issue returns internal.IssueResolver implementation.

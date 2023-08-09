@@ -39,6 +39,7 @@ type IssueService interface {
 
 type ProjectService interface {
 	GetProjectByOwnerAndNumber(ctx context.Context, ownerID string, number int) (*model.ProjectV2, error)
+	ListProjectByOwner(ctx context.Context, ownerID string, after *string, before *string, first *int, last *int) (*model.ProjectV2Connection, error)
 }
 
 func New(exec boil.ContextExecutor) Services {
