@@ -3,7 +3,6 @@ package graph
 import (
 	"context"
 	"errors"
-	"fmt"
 	"go-gql/graph/model"
 	"go-gql/graph/services"
 
@@ -29,7 +28,6 @@ func NewLoaders(Srv services.Services) *Loaders {
 
 func (u *userBatcher) BatchGetUsers(ctx context.Context, IDs []string) []*dataloader.Result[*model.User] {
 	// 引数と戻り値のスライスlenは等しくする
-	fmt.Println("IDs", IDs)
 	results := make([]*dataloader.Result[*model.User], len(IDs))
 	for i := range results {
 		results[i] = &dataloader.Result[*model.User]{
