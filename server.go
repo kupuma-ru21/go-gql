@@ -8,6 +8,7 @@ import (
 	"go-gql/graph"
 	"go-gql/graph/services"
 	"go-gql/internal"
+	"go-gql/middlewares/auth"
 	"log"
 	"net/http"
 	"os"
@@ -46,6 +47,7 @@ func main() {
 					Srv:     service,
 					Loaders: graph.NewLoaders(service),
 				},
+				Directives: graph.Directive,
 				Complexity: graph.ComplexityConfig(),
 			},
 		),
@@ -87,7 +89,7 @@ func main() {
 	boil.DebugMode = true
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", srv)
+	http.Handle("/query", auth.AuthMiddleware(srv))
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
